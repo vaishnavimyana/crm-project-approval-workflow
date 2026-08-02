@@ -1,0 +1,55 @@
+org: individualcrm
+app: crm-approval-workflow
+
+service: crm-backend
+
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  runtime: python3.12
+  region: ap-south-2
+  stage: dev
+  timeout: 30
+  memorySize: 1024
+
+  environment:
+    DATABASE_URL: postgresql://crmuser:CRMPassword123@crm-db.c3i84coaghg4.ap-south-2.rds.amazonaws.com:5432/crmdb
+    JWT_SECRET_KEY: crm-workflow-jwt-secret-2024-dev
+    JWT_ALGORITHM: HS256
+    JWT_EXPIRY_HOURS: "24"
+    S3_BUCKET_NAME: crm-contracts-bucket-vaishnavi-2026
+
+functions:
+  api:
+    handler: app.main.handler
+    events:
+      - httpApi: "*"
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+
+package:
+  patterns:
+    # Include application
+    - app/**
+    - alembic/**
+    - alembic.ini
+    - requirements.txt
+
+    # Exclude unnecessary files
+    - '!venv/**'
+    - '!venv312/**'
+    - '!node_modules/**'
+    - '!uploads/**'
+    - '!.git/**'
+    - '!.serverless/**'
+    - '!**/__pycache__/**'
+    - '!**/*.pyc'
+    - '!*.log'
+    - '!package.json'
+    - '!package-lock.json'
+    - '!seed.py'
+    - '!.env'
+    - '!.env.example'

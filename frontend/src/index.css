@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Natural human additions — needed these globally */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 
+               Roboto, Oxygen, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* Utility I kept using in tables */
+.truncate-cell {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

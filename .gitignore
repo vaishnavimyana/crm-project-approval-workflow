@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual Environments
+venv/
+venv312/
+
+# Environment Variables
+.env
+
+# VS Code
+.vscode/
+
+# Serverless
+.serverless/
+
+# Node
+**/node_modules/
+
+# Frontend build
+frontend/dist/
+
+# Uploads
+backend/uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
