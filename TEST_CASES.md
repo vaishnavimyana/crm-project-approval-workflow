@@ -217,19 +217,19 @@ Authenticate using one of the test users to obtain a JWT token before invoking p
 
 | Module | Status |
 |----------|--------|
-| Authentication | ✅ Passed |
-| Role-Based Access Control | ✅ Passed |
-| Project Creation | ✅ Passed |
-| Project Management | ✅ Passed |
-| Contract Upload & Download | ✅ Passed |
-| Validation Rules | ✅ Passed |
-| Approval Workflow | ✅ Passed |
-| Rejection & Resubmission | ✅ Passed |
-| Versioning | ✅ Passed |
-| Audit Trail | ✅ Passed |
-| Frontend Integration | ✅ Passed |
-| Backend Integration | ✅ Passed |
-| AWS Deployment | ✅ Passed |
+| Authentication |  Passed |
+| Role-Based Access Control |  Passed |
+| Project Creation |  Passed |
+| Project Management |  Passed |
+| Contract Upload & Download |  Passed |
+| Validation Rules |  Passed |
+| Approval Workflow |  Passed |
+| Rejection & Resubmission |  Passed |
+| Versioning |  Passed |
+| Audit Trail |  Passed |
+| Frontend Integration |  Passed |
+| Backend Integration |  Passed |
+| AWS Deployment |  Passed |
 
 ---
 
