@@ -26,37 +26,61 @@ Role	Email	Password
 CRM (Project Creator)	crm@test.com	password123
 Approver (Reviewer)	approver@test.com	password123
 
-🏗️ Architecture
-text
+🏗️ System Architecture
 
-Netlify Frontend (React)
-        │  HTTPS
-        ▼
-AWS API Gateway
-        │
-        ▼
-AWS Lambda (FastAPI + Mangum)
-        │
-        ▼
-PostgreSQL (Amazon RDS) ─── Amazon S3 (Contract PDFs)
+```text
+                                      User
+                                        │
+                                        │
+                                        ▼
+                          React Frontend (Netlify)
+                                        │
+                              HTTPS REST API Calls
+                                        │
+                                        ▼
+                          Amazon API Gateway (AWS)
+                                        │
+                                        ▼
+                     AWS Lambda (FastAPI + Mangum)
+                          │                    │
+                          │                    │
+                          ▼                    ▼
+        Amazon RDS PostgreSQL          Amazon S3 Bucket
+      (Projects, Users, Clients,     (Contract Documents)
+        Versions, Audit Logs)                │
+                          │                  │
+                          └──────────┬───────┘
+                                     │
+                                     ▼
+                          JSON Responses / Pre-signed URLs
+                                     │
+                                     ▼
+                            React Frontend (Netlify)
+```
 
-How it flows: The React app (on Netlify) calls the API Gateway. API Gateway invokes the
-FastAPI app running on Lambda. The backend reads/writes project data in PostgreSQL and stores
-contract PDFs in S3, issuing short-lived presigned URLs for downloads. JWT tokens secure every
-call, with role-based access controlling what each user can do.
+Architecture Components
 
-🔄 Project Workflow
+| Component | Purpose |
+|----------|---------|
+| **React + Vite** | Provides the user interface for CRM users and Approvers. |
+| **Netlify** | Hosts the frontend application. |
+| **Amazon API Gateway** | Receives all HTTP requests and routes them to AWS Lambda. |
+| **AWS Lambda** | Executes the FastAPI backend in a serverless environment. |
+| **FastAPI** | Implements business logic, validation, authentication, approval workflow, and APIs. |
+| **Amazon RDS (PostgreSQL)** | Stores users, clients, projects, project versions, approvals, contracts metadata, rate cards, and audit logs. |
+| **Amazon S3** | Stores uploaded contract documents and provides secure pre-signed download URLs. |
+| **JWT Authentication** | Secures protected APIs and enforces role-based access for CRM and Approver users. |
 
-1. CRM user logs into the application.
-2. Creates a new project by selecting a client.
-3. Client information is automatically populated.
-4. Uploads one or more contract documents.
-5. Maps job categories to available rate cards.
-6. Assigns an approver.
-7. Submits the project for approval.
-8. Approver reviews the project and either approves or rejects it.
-9. If rejected, the CRM user edits the project and resubmits it.
-10. Every action is recorded in the audit trail, and approved project modifications create a new version.
+End-to-End Workflow
+
+1. The user opens the React application hosted on **Netlify**.
+2. The frontend sends REST API requests to **Amazon API Gateway**.
+3. API Gateway invokes the **FastAPI** application running on **AWS Lambda**.
+4. FastAPI authenticates users using **JWT** and validates every request.
+5. Business data is stored and retrieved from **Amazon RDS PostgreSQL**.
+6. Contract documents are uploaded to and downloaded from **Amazon S3**.
+7. FastAPI returns JSON responses to the frontend.
+8. The React application displays updated project information, approval status, version history, and audit logs.
 
 🚀 Features
 Two roles — CRM (Project Creator) and Approver (Reviewer), enforced at UI + API level.
@@ -203,3 +227,5 @@ frontend/
   .env
 README.md
 TEST_CASES.md
+ARCHITECTURE.md
+PROJECT_EXPLANATION.md
